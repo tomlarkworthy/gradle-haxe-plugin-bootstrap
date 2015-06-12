@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        classpath group: 'com.prezi.haxe', name: 'gradle-haxe-plugin',
+                version: '4.1.6'
+
+    }
+}
+
+
+apply plugin: 'haxe'
+
+haxe {
+	main "prezi.test.Main"
+	include "prezi.test"
+	compilerVersion "3.2.0"
+
+	targetPlatforms {
+		js {
+			flavors {
+				node {
+					main "prezi.test.NodeMain"
+				}
+			}
+		}
+		// swf
+	}
+}
+
+dependencies {
+	jsNode group: "haxelib3", name: "nodejs", version: "2.0.1"
+	test group: "haxelib3", name: "hamcrest", version: "1.2.1"
+	test group: "haxelib3", name: "mlib", version: "2.0.2"
+	test group: "haxelib3", name: "munit", version: "2.1.0"
+}
+
+compileJsNode {
+	doFirst {
+		println "Running node compile"
+	}
+}
+
+runJsNodeTest {
+	enabled = false
+}
